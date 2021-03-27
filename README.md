@@ -1,6 +1,6 @@
 # wormhole-gui
 
-Wormhole-gui is a cross-platform graphical interface for [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole) that lets you easily share files, folders and text between computers on the local network.
+Wormhole-gui is a cross-platform graphical interface for [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole) that lets you easily share files, folders and text between devices.
 It uses the Go implementation of magic-wormhole, called [wormhole-william](https://github.com/psanford/wormhole-william), and compiles statically into a single binary. Wormhole-gui is compatible with the cli applications from both [wormhole-william](https://github.com/psanford/wormhole-william) and [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole).
 
 <p align="center">
@@ -14,12 +14,16 @@ Built using the following Go modules:
 
 The initial version was built in less than one day to show how quick and easy it is to use [fyne](https://github.com/fyne-io/fyne) for developing applications.
 
+## Sponsoring
+
+Wormhole-gui an open source project that is provided free of charge and that will continue to be the case forever. If you use wormhole-gui and appreciate the work being put into it, please consider supporting the development through [GitHub Sponsors](https://github.com/sponsors/Jacalz). This is in no way a requirement, but would be greatly appreciated and would allow for even more improvements to come further down the road.
+
 ## Requirements
 
 Wormhole-gui compiles into a statically linked binary with no runtime dependencies.
 Compiling requires a [Go](https://golang.org) compiler (1.14 or later) and the [prerequisites for Fyne](https://developer.fyne.io/started/).
 
-NOTE: Wormhole-gui does not currently run natively on Apple silicon (M1), but works through Rosetta 2.
+NOTE: Wormhole-gui can be built to run natively on Apple silicon (`darwin/arm64`, M1) when paired with Go 1.16 or later. However, release binaires not yet available, but regular `darwin/amd64` binaires should work through Rosetta 2 in the meantime.
 
 ## Downloads
 
