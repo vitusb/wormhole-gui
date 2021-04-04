@@ -109,6 +109,43 @@ func (s *settings) onTransitAdressChange(address string) {
 	s.app.Preferences().SetString("TransitRelayAddress", address)
 }
 
+func (s *settings) createLayout() (*fyne.Container, *fyne.Container, *fyne.Container) {
+	grids := 2
+	if fyne.CurrentDevice().IsMobile() {
+		grids = 1
+	}
+
+	interfaceContainer := container.NewGridWithColumns(grids,
+		newBoldLabel("Application Theme"), s.themeSelect,
+	)
+
+	dataContainer := container.NewGridWithColumns(grids,
+		newBoldLabel("Downloads Path"), s.downloadPathButton,
+		newBoldLabel("Overwrite Files"), s.overwriteFiles,
+		newBoldLabel("Notifications"), s.notificationRadio,
+	)
+
+	if fyne.CurrentDevice().IsMobile() {
+		dataContainer.Objects = dataContainer.Objects[4:]
+	}
+
+	wormholeContainer := container.NewVBox(
+		container.NewGridWithColumns(grids,
+			newBoldLabel("Timeout"), s.timeoutSelect,
+			newBoldLabel("Passphrase Length"), container.NewBorder(nil, nil, nil, s.componentLabel, s.componentSlider),
+		),
+		&widget.Accordion{Items: []*widget.AccordionItem{
+			{Title: "Advanced", Detail: container.NewGridWithColumns(grids,
+				newBoldLabel("AppID"), s.appID,
+				newBoldLabel("Rendezvous URL"), s.rendezvousURL,
+				newBoldLabel("Transit Relay Address"), s.transitRelayAddress,
+			)},
+		}},
+	)
+
+	return interfaceContainer, dataContainer, wormholeContainer
+}
+
 func (s *settings) buildUI() *container.Scroll {
 	themes := []string{"Adaptive (requires restart)", "Light", "Dark"}
 	timeouts := []string{"10 seconds", "30 seconds", "1 minute", "5 minutes"}
@@ -140,30 +177,7 @@ func (s *settings) buildUI() *container.Scroll {
 	s.transitRelayAddress = &widget.Entry{PlaceHolder: "transit.magic-wormhole.io:4001", OnChanged: s.onTransitAdressChange}
 	s.transitRelayAddress.SetText(s.app.Preferences().String("TransitRelayAddress"))
 
-	interfaceContainer := container.NewGridWithColumns(2,
-		newBoldLabel("Application Theme"), s.themeSelect,
-	)
-
-	dataContainer := container.NewGridWithColumns(2,
-		newBoldLabel("Downloads Path"), s.downloadPathButton,
-		newBoldLabel("Overwrite Files"), s.overwriteFiles,
-		newBoldLabel("Notifications"), s.notificationRadio,
-	)
-
-	wormholeContainer := container.NewVBox(
-		container.NewGridWithColumns(2,
-			newBoldLabel("Timeout"), s.timeoutSelect,
-			newBoldLabel("Passphrase Length"), container.NewBorder(nil, nil, nil, s.componentLabel, s.componentSlider),
-		),
-		&widget.Accordion{Items: []*widget.AccordionItem{
-			{Title: "Advanced", Detail: container.NewGridWithColumns(2,
-				newBoldLabel("AppID"), s.appID,
-				newBoldLabel("Rendezvous URL"), s.rendezvousURL,
-				newBoldLabel("Transit Relay Address"), s.transitRelayAddress,
-			)},
-		}},
-	)
-
+	interfaceContainer, dataContainer, wormholeContainer := s.createLayout()
 	return container.NewScroll(container.NewVBox(
 		&widget.Card{Title: "User Interface", Content: interfaceContainer},
 		&widget.Card{Title: "Data Handling", Content: dataContainer},
@@ -172,6 +186,10 @@ func (s *settings) buildUI() *container.Scroll {
 }
 
 func (s *settings) tabItem() *container.TabItem {
+	if fyne.CurrentDevice().IsMobile() {
+		return &container.TabItem{Icon: theme.SettingsIcon(), Content: s.buildUI()}
+	}
+
 	return &container.TabItem{Text: "Settings", Icon: theme.SettingsIcon(), Content: s.buildUI()}
 }
 

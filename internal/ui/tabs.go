@@ -11,10 +11,16 @@ func Create(app fyne.App, window fyne.Window) *container.AppTabs {
 	bridge := transport.NewClient() // To make sure that it is configured correctly
 	appSettings := &AppSettings{Theme: checkTheme(app.Preferences().StringWithFallback("Theme", "Adaptive (requires restart)"), app)}
 
-	return &container.AppTabs{Items: []*container.TabItem{
+	tabs := &container.AppTabs{Items: []*container.TabItem{
 		newSend(app, window, bridge, appSettings).tabItem(),
 		newRecv(app, window, bridge, appSettings).tabItem(),
 		newSettings(app, window, bridge, appSettings).tabItem(),
 		newAbout().tabItem(),
 	}}
+
+	if fyne.CurrentDevice().IsMobile() {
+		tabs.SetTabLocation(container.TabLocationBottom)
+	}
+
+	return tabs
 }

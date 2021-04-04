@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
 	"github.com/Jacalz/wormhole-gui/internal/transport/zip"
 	"github.com/psanford/wormhole-william/wormhole"
@@ -40,6 +41,9 @@ func (c *Client) NewReceive(ctx context.Context, code string, pathname chan stri
 
 	if msg.Type == wormhole.TransferText {
 		return c.receiveText(msg)
+	} else if fyne.CurrentDevice().IsMobile() {
+		c.askSaveLocation(msg, fyne.CurrentApp().Driver().AllWindows()[0])
+		return nil
 	}
 
 	path := filepath.Join(c.DownloadPath, msg.Name)
@@ -120,4 +124,35 @@ func (c *Client) receiveText(msg *wormhole.IncomingMessage) error {
 
 	c.showTextReceiveWindow(text)
 	return nil
+}
+
+func (c *Client) askSaveLocation(msg *wormhole.IncomingMessage, w fyne.Window) {
+	save := dialog.NewFileSave(func(file fyne.URIWriteCloser, err error) { // TODO: Might want to save this instead of recreating each time
+		if err != nil {
+			fyne.LogError("Error on selecting file to write to", err)
+			dialog.ShowError(err, w)
+
+			if err = msg.Reject(); err != nil {
+				fyne.LogError("Error on rejecting receive", err)
+				dialog.ShowError(err, w)
+			}
+
+			return
+		} else if file == nil {
+			return
+		}
+
+		_, err = io.Copy(file, msg)
+		if err != nil {
+			fyne.LogError("Error on writing data to the file", err)
+			dialog.ShowError(err, w)
+		}
+
+		if err := file.Close(); err != nil {
+			fyne.LogError("Error on closing the file", err)
+			dialog.ShowError(err, w)
+		}
+	}, w)
+	save.SetFileName(msg.Name)
+	save.Show()
 }

@@ -53,6 +53,9 @@ func (s *send) buildUI() *fyne.Container {
 	s.textChoice = &widget.Button{Text: "Text", Icon: theme.DocumentCreateIcon(), OnTapped: s.onTextSend}
 
 	choiceContent := container.NewGridWithColumns(1, s.fileChoice, s.directoryChoice, s.textChoice)
+	if fyne.CurrentDevice().IsMobile() {
+		choiceContent.Objects = choiceContent.Objects[1:]
+	}
 	s.contentPicker = dialog.NewCustom("Pick a content type", "Cancel", choiceContent, s.window)
 
 	s.sendList = bridge.NewSendList(s.client)
@@ -66,5 +69,9 @@ func (s *send) buildUI() *fyne.Container {
 }
 
 func (s *send) tabItem() *container.TabItem {
+	if fyne.CurrentDevice().IsMobile() {
+		return &container.TabItem{Icon: theme.MailSendIcon(), Content: s.buildUI()}
+	}
+
 	return &container.TabItem{Text: "Send", Icon: theme.MailSendIcon(), Content: s.buildUI()}
 }

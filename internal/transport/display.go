@@ -77,7 +77,7 @@ func (c *Client) showTextReceiveWindow(text *bytes.Buffer) {
 				}
 
 				if err := file.Close(); err != nil {
-					fyne.LogError("Error on writing data to the file", err)
+					fyne.LogError("Error on closing the file", err)
 					dialog.ShowError(err, d.window)
 				}
 			}, d.window)

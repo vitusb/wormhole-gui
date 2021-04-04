@@ -46,10 +46,19 @@ func (r *recv) buildUI() *fyne.Container {
 
 	r.recvList = bridge.NewRecvList(r.bridge)
 
-	box := container.NewVBox(container.NewGridWithColumns(2, r.codeEntry, r.codeButton), &widget.Label{})
+	grids := 2
+	if fyne.CurrentDevice().IsMobile() {
+		grids = 1
+	}
+
+	box := container.NewVBox(container.NewGridWithColumns(grids, r.codeEntry, r.codeButton), &widget.Label{})
 	return container.NewBorder(box, nil, nil, nil, r.recvList)
 }
 
 func (r *recv) tabItem() *container.TabItem {
+	if fyne.CurrentDevice().IsMobile() {
+		return &container.TabItem{Icon: theme.DownloadIcon(), Content: r.buildUI()}
+	}
+
 	return &container.TabItem{Text: "Receive", Icon: theme.DownloadIcon(), Content: r.buildUI()}
 }

@@ -1,6 +1,7 @@
 package transport
 
 import (
+	"bytes"
 	"context"
 	"io"
 	"os"
@@ -12,6 +13,15 @@ import (
 
 // NewFileSend takes the chosen file and sends it using wormhole-william.
 func (c *Client) NewFileSend(ctx context.Context, file fyne.URIReadCloser, progress wormhole.SendOption) (string, chan wormhole.SendResult, error) {
+	if fyne.CurrentDevice().IsMobile() {
+		reader, err := newSizeSeekCloser(file)
+		if err != nil {
+			return "", nil, err
+		}
+
+		return c.SendFile(ctx, file.URI().Name(), reader, progress)
+	}
+
 	return c.SendFile(ctx, file.URI().Name(), file.(io.ReadSeeker), progress)
 }
 
@@ -48,4 +58,34 @@ func (c *Client) NewDirSend(ctx context.Context, dir fyne.ListableURI, progress 
 // NewTextSend takes a text input and sends the text using wormhole-william.
 func (c *Client) NewTextSend(ctx context.Context, text string, progress wormhole.SendOption) (string, chan wormhole.SendResult, error) {
 	return c.SendText(ctx, text, progress)
+}
+
+func newSizeSeekCloser(reader io.ReadCloser) (*sizeSeekCloser, error) {
+	buffer := &bytes.Buffer{}
+	size, err := io.Copy(buffer, reader)
+	if err != nil {
+		fyne.LogError("Could not buffer file contents", err)
+		return nil, err
+	}
+
+	return &sizeSeekCloser{buffer, size}, nil
+}
+
+type sizeSeekCloser struct {
+	reader *bytes.Buffer
+	size   int64
+}
+
+// Seek fakes the size check done by wormhole-william. It does not use anything else.
+func (s *sizeSeekCloser) Seek(offset int64, whence int) (int64, error) {
+	return s.size, nil
+}
+
+func (s *sizeSeekCloser) Read(p []byte) (n int, err error) {
+	return s.reader.Read(p)
+}
+
+func (s *sizeSeekCloser) Close() error {
+	s.reader.Reset()
+	return nil
 }

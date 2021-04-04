@@ -51,6 +51,10 @@ func (a *about) buildUI() *fyne.Container {
 }
 
 func (a *about) tabItem() *container.TabItem {
+	if fyne.CurrentDevice().IsMobile() {
+		return &container.TabItem{Icon: theme.InfoIcon(), Content: a.buildUI()}
+	}
+
 	return &container.TabItem{Text: "About", Icon: theme.InfoIcon(), Content: a.buildUI()}
 }
 
