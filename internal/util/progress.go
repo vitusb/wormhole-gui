@@ -4,7 +4,7 @@ import (
 	"sync"
 
 	"fyne.io/fyne/v2/widget"
-	"github.com/psanford/wormhole-william/wormhole"
+	"github.com/vitusb/wormhole-william/wormhole"
 )
 
 // ProgressBar is contains a widget for displaying wormhole send progress.
