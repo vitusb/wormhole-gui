@@ -1,4 +1,4 @@
-package ui
+﻿package ui
 
 import (
 	"fyne.io/fyne/v2"
@@ -6,9 +6,9 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"github.com/Jacalz/wormhole-gui/v2/internal/transport"
-	"github.com/Jacalz/wormhole-gui/v2/internal/transport/bridge"
-	"github.com/Jacalz/wormhole-gui/v2/internal/util"
+	"github.com/vitusb/wormhole-gui/v2/internal/transport"
+	"github.com/vitusb/wormhole-gui/v2/internal/transport/bridge"
+	"github.com/vitusb/wormhole-gui/v2/internal/util"
 )
 
 type send struct {
@@ -56,16 +56,16 @@ func (s *send) onCustomCode(enabled bool) {
 }
 
 func (s *send) buildUI() *fyne.Container {
-	s.fileChoice = &widget.Button{Text: "File", Icon: theme.FileIcon(), OnTapped: s.onFileSend}
-	s.directoryChoice = &widget.Button{Text: "Directory", Icon: theme.FolderOpenIcon(), OnTapped: s.onDirSend}
+	s.fileChoice = &widget.Button{Text: "Datei", Icon: theme.FileIcon(), OnTapped: s.onFileSend}
+	s.directoryChoice = &widget.Button{Text: "Verzeichnis", Icon: theme.FolderOpenIcon(), OnTapped: s.onDirSend}
 	s.textChoice = &widget.Button{Text: "Text", Icon: theme.DocumentCreateIcon(), OnTapped: s.onTextSend}
-	s.codeChoice = &widget.Check{Text: "Use a custom code", OnChanged: s.onCustomCode}
+	s.codeChoice = &widget.Check{Text: "Eigenen Code verwenden", OnChanged: s.onCustomCode}
 
 	choiceContent := container.NewGridWithColumns(1, s.fileChoice, s.directoryChoice, s.textChoice, s.codeChoice)
-	s.contentPicker = dialog.NewCustom("Pick a content type", "Cancel", choiceContent, s.window)
+	s.contentPicker = dialog.NewCustom("Was möchten Sie übertragen ?", "Abbrechen", choiceContent, s.window)
 
 	s.sendList = bridge.NewSendList(s.window, s.client)
-	s.contentToSend = &widget.Button{Text: "Add content to send", Icon: theme.ContentAddIcon(), OnTapped: s.contentPicker.Show}
+	s.contentToSend = &widget.Button{Text: "Inhalt zum Senden hinzufügen", Icon: theme.ContentAddIcon(), OnTapped: s.contentPicker.Show}
 
 	s.fileDialog = dialog.NewFileOpen(s.sendList.OnFileSelect, s.window)
 	s.directoryDialog = dialog.NewFolderOpen(s.sendList.OnDirSelect, s.window)
@@ -75,5 +75,5 @@ func (s *send) buildUI() *fyne.Container {
 }
 
 func (s *send) tabItem() *container.TabItem {
-	return &container.TabItem{Text: "Send", Icon: theme.MailSendIcon(), Content: s.buildUI()}
+	return &container.TabItem{Text: "Senden", Icon: theme.MailSendIcon(), Content: s.buildUI()}
 }

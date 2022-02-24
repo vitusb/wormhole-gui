@@ -1,4 +1,4 @@
-package ui
+﻿package ui
 
 import (
 	"net/url"
@@ -9,15 +9,17 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"github.com/Jacalz/wormhole-gui/v2/internal/assets"
+	"github.com/vitusb/wormhole-gui/v2/internal/assets"
 )
 
-const version = "v3.0.0-dev"
+const version = "main-commit:c1e468e"
+const commit = "c1e468e8ee87ceaa0c996415933f8169d2a93354"
 
 var releaseURL = &url.URL{
 	Scheme: "https",
 	Host:   "github.com",
-	Path:   "/Jacalz/wormhole-gui/releases/tag/" + version,
+	// Path:   "/Jacalz/wormhole-gui/releases/tag/" + version,
+    Path:   "/Jacalz/wormhole-gui/commit/" + commit,
 }
 
 type about struct {
@@ -35,7 +37,7 @@ func (a *about) buildUI() *fyne.Container {
 	a.icon = canvas.NewImageFromResource(assets.AppIcon)
 	a.icon.SetMinSize(fyne.NewSize(256, 256))
 
-	a.nameLabel = newBoldLabel("wormhole-gui")
+	a.nameLabel = newBoldLabel("Magic Wormhole Gui")
 	a.spacerLabel = newBoldLabel("-")
 	a.hyperlink = &widget.Hyperlink{Text: version, URL: releaseURL, TextStyle: fyne.TextStyle{Bold: true}}
 
@@ -54,5 +56,5 @@ func (a *about) buildUI() *fyne.Container {
 }
 
 func (a *about) tabItem() *container.TabItem {
-	return &container.TabItem{Text: "About", Icon: theme.InfoIcon(), Content: a.buildUI()}
+	return &container.TabItem{Text: "Über", Icon: theme.InfoIcon(), Content: a.buildUI()}
 }

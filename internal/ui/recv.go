@@ -1,4 +1,4 @@
-package ui
+﻿package ui
 
 import (
 	"fyne.io/fyne/v2"
@@ -6,9 +6,9 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"github.com/Jacalz/wormhole-gui/v2/internal/transport"
-	"github.com/Jacalz/wormhole-gui/v2/internal/transport/bridge"
-	"github.com/Jacalz/wormhole-gui/v2/internal/util"
+	"github.com/vitusb/wormhole-gui/v2/internal/transport"
+	"github.com/vitusb/wormhole-gui/v2/internal/transport/bridge"
+	"github.com/vitusb/wormhole-gui/v2/internal/util"
 )
 
 type recv struct {
@@ -28,7 +28,7 @@ func newRecv(a fyne.App, w fyne.Window, c *transport.Client) *recv {
 
 func (r *recv) onRecv() {
 	if err := r.codeEntry.Validate(); err != nil || r.codeEntry.Text == "" {
-		dialog.ShowInformation("Invalid code", "The code is invalid. Please try again.", r.window)
+		dialog.ShowInformation("Ungültiger Code", "Der Code ist ungültig. Bitte erneut versuchen ...", r.window)
 		return
 	}
 
@@ -37,11 +37,11 @@ func (r *recv) onRecv() {
 }
 
 func (r *recv) buildUI() *fyne.Container {
-	r.codeEntry = &widget.Entry{PlaceHolder: "Enter code", Wrapping: fyne.TextTruncate, OnSubmitted: func(_ string) { r.onRecv() },
+	r.codeEntry = &widget.Entry{PlaceHolder: "Code eingeben", Wrapping: fyne.TextTruncate, OnSubmitted: func(_ string) { r.onRecv() },
 		Validator: util.CodeValidator,
 	}
 
-	r.codeButton = &widget.Button{Text: "Download", Icon: theme.DownloadIcon(), OnTapped: r.onRecv}
+	r.codeButton = &widget.Button{Text: "Herunterladen", Icon: theme.DownloadIcon(), OnTapped: r.onRecv}
 
 	r.recvList = bridge.NewRecvList(r.window, r.client)
 
@@ -50,5 +50,5 @@ func (r *recv) buildUI() *fyne.Container {
 }
 
 func (r *recv) tabItem() *container.TabItem {
-	return &container.TabItem{Text: "Receive", Icon: theme.DownloadIcon(), Content: r.buildUI()}
+	return &container.TabItem{Text: "Empfangen", Icon: theme.DownloadIcon(), Content: r.buildUI()}
 }

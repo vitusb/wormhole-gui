@@ -1,4 +1,4 @@
-package ui
+﻿package ui
 
 import (
 	"path/filepath"
@@ -9,9 +9,9 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"github.com/Jacalz/wormhole-gui/v2/internal/transport"
-	"github.com/Jacalz/wormhole-gui/v2/internal/util"
-	"github.com/psanford/wormhole-william/wormhole"
+	"github.com/vitusb/wormhole-gui/v2/internal/transport"
+	"github.com/vitusb/wormhole-gui/v2/internal/util"
+	"github.com/vitusb/wormhole-william/wormhole"
 )
 
 type settings struct {
@@ -62,7 +62,7 @@ func (s *settings) onOverwriteFilesChanged(selected string) {
 		return
 	}
 
-	dialog.ShowConfirm("Are you sure?", "Enabling this option might overwrite important files.", func(enable bool) {
+	dialog.ShowConfirm("Sind Sie sicher ?", "Das Aktivieren dieser Option könnte wichtige Dateien überschreiben.", func(enable bool) {
 		if !enable {
 			s.overwriteFiles.SetSelected("Off")
 			return
@@ -111,11 +111,11 @@ func (s *settings) onVerifyChanged(selected string) {
 
 func (s *settings) verify(hash string) bool {
 	verified := make(chan bool)
-	dialog.ShowCustomConfirm("Verify content", "Accept", "Reject",
+	dialog.ShowCustomConfirm("Inhalt prüfen", "Akzeptieren", "Ablehnen",
 		container.NewVBox(
-			newBoldLabel("The hash for your content is:"),
+			newBoldLabel("Der Hash-Wert für ihren Inhalt ist:"),
 			&widget.Label{Text: hash, Wrapping: fyne.TextWrapBreak},
-			newBoldLabel("Please verify that the hash is the same on both sides."),
+			newBoldLabel("Bitte prüfen Sie, dass der Hash-Wert bei beiden Teilnehmern gleich ist."),
 		), func(accept bool) { verified <- accept }, s.window,
 	)
 
@@ -176,35 +176,35 @@ func (s *settings) buildUI() *container.Scroll {
 	interfaceContainer := appearance.NewSettings().LoadAppearanceScreen(s.window)
 
 	dataContainer := container.NewGridWithColumns(2,
-		newBoldLabel("Downloads Path"), s.downloadPathButton,
-		newBoldLabel("Overwrite Files"), s.overwriteFiles,
-		newBoldLabel("Notifications"), s.notificationRadio,
+		newBoldLabel("Download-Pfad"), s.downloadPathButton,
+		newBoldLabel("Dateien überschreiben"), s.overwriteFiles,
+		newBoldLabel("Benachrichtigungen"), s.notificationRadio,
 	)
 
 	wormholeContainer := container.NewVBox(
 		container.NewGridWithColumns(2,
-			newBoldLabel("Verify before accepting"), s.verifyRadio,
-			newBoldLabel("Passphrase Length"),
+			newBoldLabel("Vor dem Akzeptieren prüfen"), s.verifyRadio,
+			newBoldLabel("Passwortlänge"),
 			container.NewBorder(nil, nil, nil, s.componentLabel, s.componentSlider),
 		),
 		&widget.Accordion{Items: []*widget.AccordionItem{
-			{Title: "Advanced", Detail: container.NewGridWithColumns(2,
+			{Title: "Erweitert", Detail: container.NewGridWithColumns(2,
 				newBoldLabel("AppID"), s.appID,
 				newBoldLabel("Rendezvous URL"), s.rendezvousURL,
-				newBoldLabel("Transit Relay Address"), s.transitRelayAddress,
+				newBoldLabel("Transit Relay Addresse"), s.transitRelayAddress,
 			)},
 		}},
 	)
 
 	return container.NewScroll(container.NewVBox(
-		&widget.Card{Title: "User Interface", Content: interfaceContainer},
-		&widget.Card{Title: "Data Handling", Content: dataContainer},
-		&widget.Card{Title: "Wormhole Options", Content: wormholeContainer},
+		&widget.Card{Title: "Benutzer-Interface", Content: interfaceContainer},
+		&widget.Card{Title: "Deten-Handling", Content: dataContainer},
+		&widget.Card{Title: "Wormhole Optionen", Content: wormholeContainer},
 	))
 }
 
 func (s *settings) tabItem() *container.TabItem {
-	return &container.TabItem{Text: "Settings", Icon: theme.SettingsIcon(), Content: s.buildUI()}
+	return &container.TabItem{Text: "Einstellungen", Icon: theme.SettingsIcon(), Content: s.buildUI()}
 }
 
 func newBoldLabel(text string) *widget.Label {
