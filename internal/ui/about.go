@@ -13,13 +13,13 @@ import (
 )
 
 const version = "main-commit:c1e468e"
-const commit = "c1e468e8ee87ceaa0c996415933f8169d2a93354"
+const commit = "3ec89d7e908f887786bb83dc5496ff610c2f613e"
 
 var releaseURL = &url.URL{
 	Scheme: "https",
 	Host:   "github.com",
 	// Path:   "/Jacalz/wormhole-gui/releases/tag/" + version,
-    Path:   "/Jacalz/wormhole-gui/commit/" + commit,
+    Path:   "/vitusb/wormhole-gui/commit/" + commit,
 }
 
 type about struct {
