@@ -4,14 +4,14 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 
-	"github.com/Jacalz/wormhole-gui/v2/internal/assets"
-	"github.com/Jacalz/wormhole-gui/v2/internal/ui"
+	"github.com/vitusb/wormhole-gui/v2/internal/assets"
+	"github.com/vitusb/wormhole-gui/v2/internal/ui"
 )
 
 func main() {
 	a := app.NewWithID("io.github.jacalz.wormhole_gui")
 	a.SetIcon(assets.AppIcon)
-	w := a.NewWindow("wormhole-gui")
+	w := a.NewWindow("Magic Wormhole Gui")
 
 	w.SetContent(ui.Create(a, w))
 	w.Resize(fyne.NewSize(700, 400))
