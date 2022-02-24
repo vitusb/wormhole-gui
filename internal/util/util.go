@@ -9,7 +9,7 @@ import (
 )
 
 // CodeValidator provides a validator for wormhole codes.
-var CodeValidator = validation.NewRegexp(`(^\d+(-(\w|\d)+)+$)|(^$)`, "Der Code ist nicht valide")
+var CodeValidator = validation.NewRegexp(`(^\d+(-(\w|\d)+)+$)|(^$)`, "Der Code ist nicht valide.")
 
 // UserDownloadsFolder returns the downloads folder corresponding to the current user.
 func UserDownloadsFolder() string {
