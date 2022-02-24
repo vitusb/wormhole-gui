@@ -1,3 +1,7 @@
+# wormhole-gui (German Version)
+
+This is the first attempt to create a german version of Wormhole-Gui inclusive german PGP-wordlist. Due to the fact that Fyne has no native language-support, i'm forced to translate Fyne directly inline in code. I hope that this will not be a challenge for future code-releases. I will do my very best ...
+
 # wormhole-gui
 
 Wormhole-gui is a cross-platform application that lets you easily share files, folders and text between devices.
