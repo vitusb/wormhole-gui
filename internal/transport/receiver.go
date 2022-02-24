@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 
 	"fyne.io/fyne/v2"
-	"github.com/Jacalz/wormhole-gui/v2/internal/transport/zip"
-	"github.com/Jacalz/wormhole-gui/v2/internal/util"
-	"github.com/psanford/wormhole-william/wormhole"
+	"github.com/vitusb/wormhole-gui/v2/internal/transport/zip"
+	"github.com/vitusb/wormhole-gui/v2/internal/util"
+	"github.com/vitusb/wormhole-william/wormhole"
 )
 
 func bail(msg *wormhole.IncomingMessage, err error) error {

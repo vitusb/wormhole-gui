@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"fyne.io/fyne/v2"
-	"github.com/psanford/wormhole-william/wormhole"
+	"github.com/vitusb/wormhole-william/wormhole"
 )
 
 // NewFileSend takes the chosen file and sends it using wormhole-william.

@@ -1,4 +1,4 @@
-package transport
+﻿package transport
 
 import (
 	"bytes"
@@ -9,7 +9,7 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"github.com/Jacalz/wormhole-gui/v2/internal/util"
+	"github.com/vitusb/wormhole-gui/v2/internal/util"
 )
 
 type textRecvWindow struct {
@@ -20,10 +20,10 @@ type textRecvWindow struct {
 
 func createTextRecvWindow(app fyne.App) *textRecvWindow {
 	display := &textRecvWindow{
-		window:     app.NewWindow("Received Text"),
+		window:     app.NewWindow("Empfangener Text"),
 		textEntry:  &widget.Entry{MultiLine: true, Wrapping: fyne.TextWrapWord},
-		copyButton: &widget.Button{Text: "Copy", Icon: theme.ContentCopyIcon()},
-		saveButton: &widget.Button{Text: "Save", Icon: theme.DocumentSaveIcon()},
+		copyButton: &widget.Button{Text: "Kopieren", Icon: theme.ContentCopyIcon()},
+		saveButton: &widget.Button{Text: "Speichern", Icon: theme.DocumentSaveIcon()},
 	}
 
 	actionContainer := container.NewGridWithColumns(2, display.copyButton, display.saveButton)
@@ -74,7 +74,7 @@ func (c *Client) showTextReceiveWindow(text *bytes.Buffer) {
 					dialog.ShowError(err, d.window)
 				}
 			}, d.window)
-			save.SetFileName("received.txt")
+			save.SetFileName("Empfangener-Text.txt")
 			save.Resize(util.WindowSizeToDialog(d.window.Canvas().Size()))
 			save.Show()
 		}()
@@ -93,10 +93,10 @@ type textSendWindow struct {
 
 func createTextSendWindow(app fyne.App) *textSendWindow {
 	display := &textSendWindow{
-		window:       app.NewWindow("Send Text"),
+		window:       app.NewWindow("Text senden"),
 		textEntry:    &widget.Entry{MultiLine: true, Wrapping: fyne.TextWrapWord},
-		cancelButton: &widget.Button{Text: "Cancel", Icon: theme.CancelIcon()},
-		sendButton:   &widget.Button{Text: "Send", Icon: theme.MailSendIcon(), Importance: widget.HighImportance},
+		cancelButton: &widget.Button{Text: "Abbrechen", Icon: theme.CancelIcon()},
+		sendButton:   &widget.Button{Text: "Senden", Icon: theme.MailSendIcon(), Importance: widget.HighImportance},
 	}
 	display.textEntry.OnSubmitted = func(_ string) {
 		display.sendButton.OnTapped()
