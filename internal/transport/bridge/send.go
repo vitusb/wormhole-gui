@@ -1,4 +1,4 @@
-package bridge
+﻿package bridge
 
 import (
 	"sync"
@@ -8,8 +8,8 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/widget"
-	"github.com/Jacalz/wormhole-gui/v2/internal/transport"
-	"github.com/Jacalz/wormhole-gui/v2/internal/util"
+	"github.com/vitusb/wormhole-gui/v2/internal/transport"
+	"github.com/vitusb/wormhole-gui/v2/internal/util"
 )
 
 // SendItem is the item that is being sent.
@@ -41,7 +41,7 @@ func (p *SendList) Length() int {
 func (p *SendList) CreateItem() fyne.CanvasObject {
 	return container.New(&listLayout{},
 		&widget.FileIcon{URI: nil},
-		&widget.Label{Text: "Waiting for filename...", Wrapping: fyne.TextTruncate},
+		&widget.Label{Text: "Warte auf Daten ...", Wrapping: fyne.TextTruncate},
 		newCodeDisplay(p.window),
 		util.NewProgressBar(),
 	)
@@ -69,7 +69,7 @@ func (p *SendList) NewSendItem(name string, uri fyne.URI) *SendItem {
 	p.lock.Lock()
 	defer p.lock.Unlock()
 
-	item := &SendItem{Name: name, Code: "Waiting for code...", URI: uri}
+	item := &SendItem{Name: name, Code: "Warte auf Code ...", URI: uri}
 	p.Items = append(p.Items, item)
 	return item
 }
@@ -111,9 +111,9 @@ func (p *SendList) OnFileSelect(file fyne.URIReadCloser, err error) {
 			fyne.LogError("Error on sending file", res.Error)
 			item.Progress.Failed()
 			dialog.ShowError(res.Error, p.window)
-			p.client.ShowNotification("File send failed", "An error occurred when sending the file.")
+			p.client.ShowNotification("Versenden der Datei fehlgeschlagen", "Ein Fehler ist beim Versenden aufgetreten.")
 		} else if res.OK {
-			p.client.ShowNotification("File send completed", "The file was sent successfully.")
+			p.client.ShowNotification("Versenden der Datei abgeschlossen", "Die Daten wurden erfolgreich übertragen.")
 		}
 	}()
 }
@@ -147,9 +147,9 @@ func (p *SendList) OnDirSelect(dir fyne.ListableURI, err error) {
 			fyne.LogError("Error on sending directory", res.Error)
 			item.Progress.Failed()
 			dialog.ShowError(res.Error, p.window)
-			p.client.ShowNotification("Directory send failed", "An error occurred when sending the directory.")
+			p.client.ShowNotification("Versenden des Verzeichnisses fehlgeschlagen", "Ein Fehler ist beim Versenden aufgetreten.")
 		} else if res.OK {
-			p.client.ShowNotification("Directory send completed", "The directory was sent successfully.")
+			p.client.ShowNotification("Versenden des Verzeichnisses abgeschlossen", "Die Daten wurden erfolgreich übertragen.")
 		}
 	}()
 }
@@ -157,7 +157,7 @@ func (p *SendList) OnDirSelect(dir fyne.ListableURI, err error) {
 // SendText sends new text.
 func (p *SendList) SendText() {
 	// The file URI is a hack to get the correct icon.
-	item := &SendItem{Name: "Text Snippet", Code: "Waiting for code...", URI: storage.NewFileURI("text")}
+	item := &SendItem{Name: "Text-Übertragung", Code: "Warte auf Code ...", URI: storage.NewFileURI("text")}
 
 	go func() {
 		text := <-p.client.ShowTextSendWindow()
@@ -183,9 +183,9 @@ func (p *SendList) SendText() {
 			fyne.LogError("Error on sending text", res.Error)
 			item.Progress.Failed()
 			dialog.ShowError(res.Error, p.window)
-			p.client.ShowNotification("Text send failed", "An error occurred when sending the text.")
+			p.client.ShowNotification("Versenden des Textes fehlgeschlagen", "Ein Fehler ist beim Versenden aufgetreten.")
 		} else if res.OK && p.client.Notifications {
-			p.client.ShowNotification("Text send completed", "The text was sent successfully.")
+			p.client.ShowNotification("Versenden des Textes abgeschlossen", "Die Daten wurden erfolgreich übertragen.")
 		}
 	}()
 }

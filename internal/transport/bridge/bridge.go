@@ -1,4 +1,4 @@
-// Package bridge serves as a bridge between the transport backend and the Fyne ui
+﻿// Package bridge serves as a bridge between the transport backend and the Fyne ui
 package bridge
 
 import (
@@ -18,7 +18,7 @@ type codeDisplay struct {
 }
 
 func (c *codeDisplay) copyOnPress() {
-	if c.Text != "Waiting for code..." {
+	if c.Text != "Warte auf Code ..." {
 		c.button.SetIcon(theme.ConfirmIcon())
 		c.clipboard.SetContent(c.Text)
 	} else {
@@ -36,7 +36,7 @@ func newCodeDisplay(window fyne.Window) *fyne.Container {
 	}
 	c.ExtendBaseWidget(c)
 
-	c.Text = "Waiting for code..."
+	c.Text = "Warte auf Code ..."
 	c.button.OnTapped = c.copyOnPress
 
 	return container.NewHBox(c, c.button)

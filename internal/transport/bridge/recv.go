@@ -1,4 +1,4 @@
-package bridge
+﻿package bridge
 
 import (
 	"sync"
@@ -8,8 +8,8 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/widget"
-	"github.com/Jacalz/wormhole-gui/v2/internal/transport"
-	"github.com/Jacalz/wormhole-gui/v2/internal/util"
+	"github.com/vitusb/wormhole-gui/v2/internal/transport"
+	"github.com/vitusb/wormhole-gui/v2/internal/util"
 )
 
 // RecvItem is the item that is being received
@@ -40,7 +40,7 @@ func (p *RecvList) Length() int {
 func (p *RecvList) CreateItem() fyne.CanvasObject {
 	return container.New(&listLayout{},
 		&widget.FileIcon{URI: nil},
-		&widget.Label{Text: "Waiting for filename...", Wrapping: fyne.TextTruncate},
+		&widget.Label{Text: "Warte auf Daten ...", Wrapping: fyne.TextTruncate},
 		util.NewProgressBar(),
 	)
 }
@@ -66,7 +66,7 @@ func (p *RecvList) NewRecvItem() *RecvItem {
 	p.lock.Lock()
 	defer p.lock.Unlock()
 
-	item := &RecvItem{Name: "Waiting for filename..."}
+	item := &RecvItem{Name: "Warte auf Daten ..."}
 	p.Items = append(p.Items, item)
 	return item
 }
@@ -84,7 +84,7 @@ func (p *RecvList) NewReceive(code string) {
 		if name != "text" {
 			item.Name = item.URI.Name()
 		} else {
-			item.Name = "Text Snippet"
+			item.Name = "Text-Übertragung"
 		}
 
 		close(path)
@@ -93,11 +93,11 @@ func (p *RecvList) NewReceive(code string) {
 
 	go func(code string) {
 		if err := p.client.NewReceive(code, path, item.Progress); err != nil {
-			p.client.ShowNotification("Receive failed", "An error occurred when receiving the data.")
+			p.client.ShowNotification("Empfang fehlgeschlagen", "Ein Fehler ist beim Empfang der Daten aufgetreten.")
 			item.Progress.Failed()
 			dialog.ShowError(err, p.window)
 		} else {
-			p.client.ShowNotification("Receive completed", "The data was received successfully.")
+			p.client.ShowNotification("Empfang abgeschlossen", "Die Daten wurden erfolgreich empfangen.")
 		}
 
 		p.Refresh()
