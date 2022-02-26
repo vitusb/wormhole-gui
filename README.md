@@ -4,19 +4,20 @@ This is the first attempt to create a german version of Wormhole-Gui inclusive g
 
         - vitusb- 😄
 
-# wormhole-gui
+# Wormhole Gui (deutsche Beschreibung) 🇩🇪
 
-Wormhole-gui is a cross-platform application that lets you easily share files, folders and text between devices.
-It uses the Go implementation of magic-wormhole, called [wormhole-william](https://github.com/vitusb/wormhole-william), and compiles statically into a single binary. Wormhole-gui is also compatible with sending to and receiving from other wormhole clients, such as the cli applications from both [wormhole-william](https://github.com/vitusb/wormhole-william) and [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole).
+"Wormhole Gui" ist eine plattformübergreifende Anwendung, mit der Sie Dateien, Ordner und Text problemlos zwischen Geräten austauschen können. Es verwendet die Go-Implementierung von magic-wormhole, genannt [wormhole-william](https://github.com/vitusb/wormhole-william), und wird statisch in eine einzige Binärdatei kompiliert. Wormhole-gui ist auch mit dem Senden an und Empfangen von anderen Wormhole-Clients kompatibel, wie z. B. den CLI-Anwendungen von [wormhole-william](https://github.com/vitusb/wormhole-william) und [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole). 
 
 <p align="center">
   <img src="internal/assets/screenshot.png" />
 </p>
 
-Built using the following Go modules:
+Erstellt unter Verwendung folgender Go-Lang Module:
 - [fyne](https://github.com/fyne-io/fyne) (version 2.1.3 / german patches)
 - [wormhole-william](https://github.com/vitusb/wormhole-william) (latest github-master)
 - [compress](https://github.com/klauspost/compress) (version 1.14.4)
+
+## - English description - 🇬🇧
 
 The initial version was built in less than one day to show how quick and easy it is to use [fyne](https://github.com/fyne-io/fyne) for developing applications.
 
