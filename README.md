@@ -4,7 +4,7 @@ This is the first attempt to create a german version of Wormhole-Gui inclusive g
 
         - vitusb- 😄
 
-# Wormhole Gui (deutsche Beschreibung) 🇩🇪
+# Wormhole Gui [(deutsche Beschreibung)](https://github.com/vitusb/wormhole-gui/blob/main/wormhole-gui.txt) 🇩🇪
 
 "Wormhole Gui" ist eine plattformübergreifende Anwendung, mit der Sie Dateien, Ordner und Text problemlos zwischen Geräten austauschen können. Es verwendet die Go-Implementierung von magic-wormhole, genannt [wormhole-william](https://github.com/vitusb/wormhole-william), und wird statisch in eine einzige Binärdatei kompiliert. Wormhole-gui ist auch mit dem Senden an und Empfangen von anderen Wormhole-Clients kompatibel, wie z. B. den CLI-Anwendungen von [wormhole-william](https://github.com/vitusb/wormhole-william) und [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole). 
 
