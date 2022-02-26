@@ -14,7 +14,7 @@ func main() {
 	w := a.NewWindow("Magic Wormhole Gui")
 
 	w.SetContent(ui.Create(a, w))
-	w.Resize(fyne.NewSize(700, 400))
+	w.Resize(fyne.NewSize(720, 500))
 	w.SetMaster()
 	w.ShowAndRun()
 }
