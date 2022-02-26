@@ -56,7 +56,7 @@ func (s *settings) onDownloadsPathChanged() {
 }
 
 func (s *settings) onOverwriteFilesChanged(selected string) {
-	if selected == "Off" {
+	if selected == "Aus" {
 		s.client.OverwriteExisting = false
 		s.preferences.SetBool("OverwriteFiles", s.client.OverwriteExisting)
 		return
@@ -64,7 +64,7 @@ func (s *settings) onOverwriteFilesChanged(selected string) {
 
 	dialog.ShowConfirm("Sind Sie sicher ?", "Das Aktivieren dieser Option könnte wichtige Dateien überschreiben.", func(enable bool) {
 		if !enable {
-			s.overwriteFiles.SetSelected("Off")
+			s.overwriteFiles.SetSelected("Aus")
 			return
 		}
 
@@ -74,7 +74,7 @@ func (s *settings) onOverwriteFilesChanged(selected string) {
 }
 
 func (s *settings) onNotificationsChanged(selected string) {
-	s.client.Notifications = selected == "On"
+	s.client.Notifications = selected == "An"
 	s.preferences.SetBool("Notifications", s.client.Notifications)
 }
 
@@ -100,7 +100,7 @@ func (s *settings) onTransitAdressChange(address string) {
 }
 
 func (s *settings) onVerifyChanged(selected string) {
-	enabled := selected == "On"
+	enabled := selected == "An"
 	s.app.Preferences().SetBool("Verify", enabled)
 	if enabled {
 		s.client.VerifierOk = s.verify
@@ -154,7 +154,7 @@ func (s *settings) getPreferences() {
 }
 
 func (s *settings) buildUI() *container.Scroll {
-	onOffOptions := []string{"On", "Off"}
+	onOffOptions := []string{"An", "Aus"}
 
 	s.downloadPathButton = &widget.Button{Icon: theme.FolderOpenIcon(), OnTapped: s.onDownloadsPathChanged}
 
@@ -198,7 +198,7 @@ func (s *settings) buildUI() *container.Scroll {
 
 	return container.NewScroll(container.NewVBox(
 		&widget.Card{Title: "Benutzer-Interface", Content: interfaceContainer},
-		&widget.Card{Title: "Deten-Handling", Content: dataContainer},
+		&widget.Card{Title: "Dateiverwaltung", Content: dataContainer},
 		&widget.Card{Title: "Wormhole Optionen", Content: wormholeContainer},
 	))
 }
@@ -213,8 +213,8 @@ func newBoldLabel(text string) *widget.Label {
 
 func onOrOff(on bool) string {
 	if on {
-		return "On"
+		return "An"
 	}
 
-	return "Off"
+	return "Aus"
 }
