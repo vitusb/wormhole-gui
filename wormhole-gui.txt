@@ -1,0 +1,235 @@
+﻿
+          "Magic-Wormhole" mit grafischer Oberfläche
+          ==========================================
+         (Eine Alternative zur E-Mailverschlüsselung)
+         
+            ... es gibt keine E-Mail Adressen ...
+                 ... nur 1-mal-Passwörter ...
+
+
+Dateien schnell und sicher zu übertragen kann umständlich sein.
+
+Gerade wenn Verschlüsselung mit E-Mail beteiligt ist, verkompliziert
+sich die Handhabung durch Adressierung und Verwaltung von
+E-Mail-Adressen und privaten und öffentlichen Schlüsseln.
+
+Hinzu kommt, dass die Verschlüsselung mit Nutzung von langlebigen
+Schlüsseln (ausgestellt für 1-2 Jahre) durch Quanten-Computer bedroht
+ist. 
+
+"Magic-Wormhole" verwendet hier ein komplett neues Konzept der
+Adressierung und verschlüsselten Übertragung von Daten mit Hilfe der
+Passwort-basierten Authentifikation "SPAKE2" unter Nutzung starker
+Elliptischer Kurven-Verschlüsselung. Die Grösse der übertragenen
+Daten ist nahzu unbegrenzt. Die erzeugten kurzlebigen
+"Verschlüsselungs-Codes sind durch eine phonetische Auswahl und eine
+Berücksichtigung der Linguistik über System- und landespezifische
+Unterschiede der Landes-Zeichentabellen hinweg transparent nutzbar und
+über Hilfsmittel der audio-visuellen Medien übermittelbar.
+
+Die hier vorgestellte grafische Version "Wormhole-GUI" basiert auf
+der API des Programmes "Magic-Wormhole" und ist eine 1:1
+Umsetzung in der Programmiersprache "Go". Sie wurde gewählt, da
+die Benutzerfreundlichkeit durch die grafische Benutzeroberfläche
+grösser ist. "Wormhole-GUI" wird von dem schwedischen Programmierer
+"Jacob Alzen" entwickelt und basiert auf der "Magic-Wormhole"
+Implementierung "Wormhole-William" von "Peter Sanford" in der
+Programmiersprache "Go". Die Grafikoberfläche wird mit der
+plattformunabhängigen Grafikbibliothek "Fyne" (https://fyne.io/)
+realisiert, in deren Entwicklungsteam "Jacob Alzen" ebenfalls
+vertreten ist. Somit steht das Program auf allen erdenkbaren
+Hardwareplattformen ohne den Umweg über komplexe, sicherheitskritische
+Javascript-Frameworks wie "Electron", etc. nativ zur Verfügung.
+
+Die deutsche Übersetzung von "Wormhole-GUI", sowie die Generierung
+deutscher phonetischer Passwortlisten zur telefonischen
+Sprachübermittlung der Verschlüsselungs-Codes von "Magic-Wormhole"
+über z. B. Telefonie wurde von Veit Berwig (Github: "vitusb")
+umgesetzt. Die Passwortliste ist angelehnt an die PGP_Wortliste, setzt
+die Silben-Arithmetik aber aufgrund deutscher Linguistik nicht
+vollständig um.
+
+Hintergrund:
+
+Das Original-Programm basiert auf dem Kommandozeilen-Werkzeug
+"Magic-Wormhole". 
+
+Das Prinzip von "Magic-Wormhole" ist denkbar einfach ...
+
+Als Absender initiiert man mit dem Befehl:
+
+    "wormhole send DATEI" ... die Übertragung.
+
+Das Programm gibt als Antwort einen Geheimcode wie z. B.:
+
+    "7-fenster-hochhalten-erheiterung" 
+    
+    ... aus und wartet auf die Gegenseite.
+
+Diesen Geheimcode teilt man dem Empfänger per Telefon,
+(verschlüsseltem) Chat (WhatsApp, etc.) oder persönlich mit.
+Dieser gibt bei sich ... 
+
+    "wormhole receive 7-fenster-hochhalten-erheiterung" ...
+     
+                ... (also gefolgt vom Geheimcode) ein.
+
+
+Danach handeln die beiden Wormhole-Instanzen die verschlüsselung und
+die Verbindung aus und übertragen die Dateien. Voraussetzung ist, dass
+beide Seiten gleichzeitig online sind. Verbindungen durch NAT-Firewalls
+sind über eine enstprechende STUN-Kommunikation möglich.
+
+Die Sicherheit gewährleistet das Open-Source-Tool "Magic-Wormhole",
+indem es aus dem Geheimcode einen starken Schlüssel erzeugt. Dieses
+Verfahren nennt sich "Password Authenticated Key Exchange (PAKE bzw.
+SPAKE2)" und gilt als sicher. Hier wird eine direkte SPAKE2-
+Implementierung in der Sprache "Go" der original "Python"-Routine von
+"Biran Warner" verwendet.
+
+"Magic-Wormhole" verwendet zur Kommunikation das von "Trevor Perrin"
+entwickelte "Noise Protocol Framework" (https://noiseprotocol.org/),
+ein Framework zur Umsetzung von sicherer, verschlüsselter
+Netzwerk-Kommunikation: 
+
+Vorstellung von "Noise" auf dem Chaos Communication Congress 34C3 2017:
+https://www.youtube.com/watch?v=OVhzCwSBPJM
+
+Die Daten sind so lange sicher, wie der Geheimcode keinem Dritten
+bekannt ist. Dies ist trotz der einfachen Wörter unwahrscheinlich,
+da ein Angreifer zur gleichen Zeit online sein muss und nur einen
+Versuch hätte, das Geheimnis zu erraten.
+
+Wird der Code auf der Empfängerseite falsch eingegeben, bricht die
+Absenderseite die Verbindung ab. Nach Beginn der Übertragung ist das
+Passwort nutzlos, da für jede neue Verbindung immer wieder nur für
+diesen Zeitpunkt ein starker neuer Schlüssel mit einem neuen
+Passwort-Code erzeugt wird !!
+
+Um die Übertragung auszuhandeln, baut Wormhole eine Verbindung zum
+Server "relay.magic-wormhole.io" und zu "transit.magic-wormhole.io"
+auf. Dieser Server macht nichts weiter, als einen Kanal zuzuweisen
+(dafür stehen die ersten bis zu 3 Ziffern in dem zugewiesenen Code)
+und die zwei darauf eingehenden Verbindungen miteinander zu verknüpfen.
+
+Den Inhalt der Übertragung kann die Vermittlungsstelle nicht einsehen,
+da dieser durch die starke Verschlüsselung mittels "SPAKE2"
+verschlüsselt ist. Ist die verschlüsselte Verbindung aufgebaut,
+tauschen die Wormhole-Clienten ihre verfügbaren IP-Adressen und
+ausgewählten Ports (Kanäle) aus und versuchen sich über diese
+gegenseitig zu erreichen. Klappt dies, werden die Daten verschlüsselt
+"peer-to-peer" direkt zwischen den beiden Computern (Teilnehmern)
+übertragen. Befinden sich beide Computer-Systeme im gleichen lokalen
+Netz, so wird ein direkter Weg gewählt und der Umweg über das
+Internet entfällt.
+
+Verhindern "NAT" oder "Firewall" eine direkte Verbindung, handeln die
+Klienten (Computer) eine Umleitung über den Server:
+
+    "transit.magic-wormhole.io" aus.
+
+Auch dieser Server soll laut dem Entwickler "Brian Warner" die beiden
+verschlüsselten Datenströme lediglich miteinander verbinden. Er hat
+keinerlei Kenntnis über die enthaltenen Daten.
+
+Die Webdienste stellt der Entwickler "Brian Warner" derzeit kostenlos
+bereit. Das Programm kennt auch Optionen, mit denen man auf Wunsch
+einen eigenen Server als Vermittlung verwenden kann. Die dafür nötigen
+Serverdienste sowie das API zum Protokoll hat Warner ebenfalls auf
+auf dem Entwickler-Portal "GitHub" veröffentlicht.
+
+Falls man der gegenwärtigen Server-Vermittlung durch "Brian-Warner"
+nicht vertraut, so ist es möglich mit dem auf "GitHub"
+veröffentlichten Programmcode eigene Server mit einem eigenen Kanal
+zu betreiben. Somit ist es möglich eine komplette "private"
+Infrastruktur OHNE Nutzung von Ressourcen Dritter wie Google bei
+"Signal" oder Amazon, etc. zu betreiben.
+
+Gleiches gilt für eine Bibliothek, um den Datentransfer in eigene
+Anwendungen zu integrieren (wie dies bei "Wormhole-GUI" der Fall ist).
+
+"Magic Wormhole", der "Magic Wormhole"-Mailbox Server sowie der
+"Magic Wormhole"-Transit-Relay Server sind in der Programmiersprache
+"Python" geschrieben und laufen unter den Betriebsystemen "Windows",
+"macOS" und "Linux"; die Client-Software in der "Go"-Version auch auf
+"Android"-Smartphones ("Wormhole-William Mobile"). Die Programm-
+Varianten können alle untereinander kommunizieren. 
+
+Obwohl im Original "Magic Wormhole" ein Kommandozeilen-Programm ist,
+zeigt es, dass sich Sicherheit und Komfort miteinander vereinbaren
+lassen.
+
+Der Entwickler "Brian Warner" verfügt über sehr detailierte Kenntnisse
+der Umsetzung von "quanten-resistenten" Verschlüsselungsverfahren.
+Er selbst ist leitender Programmierer in dem Projekt "Tahoe-LAFS",
+einem verteilten, verschlüsselten Dateisystem. 
+
+"Peter Sanford" ("Wormhole-William") ist Security Staff Software-
+Engineer bei "Slack Technologies, Inc.". "Jacob Alzen"
+("Wormhole-GUI") ist Mitentwickler im Projekt "Fyne.io".
+
+Die Programmiersprache "Go" gilt als eine "sichere" Sprache; beide
+Projekte: "Wormhole-GUI" und "Wormhole-William" vewenden ein
+Test-Framework zur statischen Programmcode-Analyse, um Schwachstellen
+im Quellcode zu erkennen.
+
+
+(Quelle: Teile von der CT'-Redaktion (angepasst): ktn@ct.de)
+
+Webseiten und Quellen:
+=====================================================================
+Magic-Wormhole:    https://github.com/magic-wormhole/magic-wormhole
+Dokumentation:     https://magic-wormhole.readthedocs.io/en/latest/
+Wormhole-William:  https://github.com/psanford/wormhole-william
+Mobile (Android):  https://github.com/psanford/wormhole-william-mobile
+Wormhole-GUI:      https://github.com/Jacalz/wormhole-gui
+Fyne:              https://apps.fyne.io/apps/wormhole-gui.html
+                   https://fyne.io/
+SPAKE2 (in "Go"):  https://salsa.debian.org/vasudev/gospake2
+Krypto Links       https://github.com/sobolevn/awesome-cryptography
+Erklärung zu ECC   https://security.stackexchange.com/questions/50878/ecdsa-vs-ecdh-vs-ed25519-vs-curve25519#211484
+DRAFT SPAKE2       https://tools.ietf.org/id/draft-irtf-cfrg-spake2-10.html
+PAKE               https://en.wikipedia.org/wiki/Password-authenticated_key_agreement
+CodeQL             https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
+
+Das GnuPG/PGP Problem
+https://latacora.micro.blog/2019/07/16/the-pgp-problem.html
+https://latacora.micro.blog/2020/02/19/stop-using-encrypted.html
+
+Trevor Perrin PGP Analyse
+https://mailarchive.ietf.org/arch/msg/openpgp/tB00vO5r-qneX9wz1xz3netpXVU
+
+Warum E-Mail unsicher ist (Analyse von THOMAS H. PTACEK / Analyst)
+https://news.ycombinator.com/item?id=16088386
+
+EFAIL
+https://www.usenix.org/system/files/conference/usenixsecurity18/sec18-poddebniak.pdf
+
+Filippo Valsorda ("FiloSottile") ist Kryptologe und
+Sicherheits-Koordinator bei "Google" und führender Entwickler im
+Kernteam der Programmiersprache "Go". Er is verantwortlich für den
+Verschlüsselungs-Code in "Go" ... für die Paketzweige:
+- crypto/... und 
+- golang.org/x/crypto.
+
+Hier von "Filippo Valsorda" einer der bemerkenswertesten Artikel
+(neben denen von Matthew Rosenfeld ("Moxie Marlinspike"),
+"Matthew Green" (Kryptologe) und "Felix von Leitner") für Gründe,
+warum PGP/GnuPG aus technischen und qualitativen Gründen nicht mehr
+für verschlüsselte Kommunikation Verwendung finden sollte:
+
+https://blog.filippo.io/giving-up-on-long-term-pgp/
+
+Foren zu moderner Kryptografie: https://moderncrypto.org/
+
+Artikel von "Matthew Green" Kryptologe und Professor an der
+Johns Hopkins Universität zu (S)PAKE:
+
+Lets talk about "PAKE":
+https://blog.cryptographyengineering.com/2018/10/19/lets-talk-about-pake/
+
+Artikel von "Matthew Green" Kryptologe und Professor an der
+Johns Hopkins Universität zu PGP/GNUPG:
+
+What's the matter with PGP:
+https://blog.cryptographyengineering.com/2014/08/13/whats-matter-with-pgp/
