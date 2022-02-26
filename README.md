@@ -1,9 +1,3 @@
-# wormhole-gui (German Version) 🇩🇪
-
-This is the first attempt to create a german version of Wormhole-Gui inclusive german PGP-wordlist (by german version of wormhole-william). Due to the fact that Fyne has no native language-support, i'm forced to translate Fyne [directly inline in code](https://github.com/vitusb/fyne/tree/master/german). I hope that this will not be a challenge for future code-releases. I will do my very best ...
-
-        - vitusb- 😄
-
 # Wormhole Gui [(deutsche Beschreibung)](https://github.com/vitusb/wormhole-gui/blob/main/wormhole-gui.txt) 🇩🇪
 
 "Wormhole Gui" ist eine plattformübergreifende Anwendung, mit der Sie Dateien, Ordner und Text problemlos zwischen Geräten austauschen können. Es verwendet die Go-Implementierung von magic-wormhole, genannt [wormhole-william](https://github.com/vitusb/wormhole-william), und wird statisch in eine einzige Binärdatei kompiliert. Wormhole-gui ist auch mit dem Senden an und Empfangen von anderen Wormhole-Clients kompatibel, wie z. B. den CLI-Anwendungen von [wormhole-william](https://github.com/vitusb/wormhole-william) und [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole). 
@@ -16,6 +10,12 @@ Erstellt unter Verwendung folgender Go-Lang Module:
 - [fyne](https://github.com/fyne-io/fyne) (version 2.1.3 / german patches)
 - [wormhole-william](https://github.com/vitusb/wormhole-william) (latest github-master)
 - [compress](https://github.com/klauspost/compress) (version 1.14.4)
+
+# wormhole-gui (German Version) 🇩🇪
+
+This is the first attempt to create a german version of Wormhole-Gui inclusive german PGP-wordlist (by german version of wormhole-william). Due to the fact that Fyne has no native language-support, i'm forced to translate Fyne [directly inline in code](https://github.com/vitusb/fyne/tree/master/german). I hope that this will not be a challenge for future code-releases. I will do my very best ...
+
+        - vitusb- 😄
 
 ## - English description - 🇬🇧
 
