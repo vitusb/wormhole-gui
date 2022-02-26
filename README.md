@@ -1,4 +1,4 @@
-# wormhole-gui (German Version)
+# wormhole-gui (German Version) 🇩🇪
 
 This is the first attempt to create a german version of Wormhole-Gui inclusive german PGP-wordlist (by german version of wormhole-william). Due to the fact that Fyne has no native language-support, i'm forced to translate Fyne [directly inline in code](https://github.com/vitusb/fyne/tree/master/german). I hope that this will not be a challenge for future code-releases. I will do my very best ...
 
