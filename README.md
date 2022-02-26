@@ -14,7 +14,7 @@ It uses the Go implementation of magic-wormhole, called [wormhole-william](https
 </p>
 
 Built using the following Go modules:
-- [fyne](https://github.com/fyne-io/fyne) (version 2.1.2)
+- [fyne](https://github.com/fyne-io/fyne) (version 2.1.3 / german patches)
 - [wormhole-william](https://github.com/vitusb/wormhole-william) (latest github-master)
 - [compress](https://github.com/klauspost/compress) (version 1.14.4)
 
