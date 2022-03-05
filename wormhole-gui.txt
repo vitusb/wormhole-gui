@@ -1,9 +1,9 @@
-﻿
+
           "Magic-Wormhole" mit grafischer Oberfläche
           ==========================================
          (Eine Alternative zur E-Mailverschlüsselung)
          
-            ... es gibt keine E-Mail Adressen ...
+            ... es gibt keine E-Mail-Adressen ...
                  ... nur 1-mal-Passwörter ...
 
 
@@ -20,12 +20,12 @@ ist.
 "Magic-Wormhole" verwendet hier ein komplett neues Konzept der
 Adressierung und verschlüsselten Übertragung von Daten mit Hilfe der
 Passwort-basierten Authentifikation "SPAKE2" unter Nutzung starker
-Elliptischer Kurven-Verschlüsselung. Die Grösse der übertragenen
-Daten ist nahzu unbegrenzt. Die erzeugten kurzlebigen
+Elliptischer Kurven-Verschlüsselung. Die Größe der übertragenen
+Daten ist nahezu unbegrenzt. Die erzeugten kurzlebigen
 "Verschlüsselungs-Codes sind durch eine phonetische Auswahl und eine
 Berücksichtigung der Linguistik über System- und landespezifische
 Unterschiede der Landes-Zeichentabellen hinweg transparent nutzbar und
-über Hilfsmittel der audio-visuellen Medien übermittelbar.
+über Hilfsmittel der audiovisuellen Medien übermittelbar.
 
 Die hier vorgestellte grafische Version "Wormhole-GUI" basiert auf
 der API des Programmes "Magic-Wormhole" und ist eine 1:1
@@ -75,17 +75,17 @@ Dieser gibt bei sich ...
                 ... (also gefolgt vom Geheimcode) ein.
 
 
-Danach handeln die beiden Wormhole-Instanzen die verschlüsselung und
+Danach handeln die beiden Wormhole-Instanzen die Verschlüsselung und
 die Verbindung aus und übertragen die Dateien. Voraussetzung ist, dass
 beide Seiten gleichzeitig online sind. Verbindungen durch NAT-Firewalls
-sind über eine enstprechende STUN-Kommunikation möglich.
+sind über eine entsprechende STUN-Kommunikation möglich.
 
 Die Sicherheit gewährleistet das Open-Source-Tool "Magic-Wormhole",
 indem es aus dem Geheimcode einen starken Schlüssel erzeugt. Dieses
 Verfahren nennt sich "Password Authenticated Key Exchange (PAKE bzw.
 SPAKE2)" und gilt als sicher. Hier wird eine direkte SPAKE2-
 Implementierung in der Sprache "Go" der original "Python"-Routine von
-"Biran Warner" verwendet.
+"Brian Warner" verwendet.
 
 "Magic-Wormhole" verwendet zur Kommunikation das von "Trevor Perrin"
 entwickelte "Noise Protocol Framework" (https://noiseprotocol.org/),
@@ -104,7 +104,7 @@ Wird der Code auf der Empfängerseite falsch eingegeben, bricht die
 Absenderseite die Verbindung ab. Nach Beginn der Übertragung ist das
 Passwort nutzlos, da für jede neue Verbindung immer wieder nur für
 diesen Zeitpunkt ein starker neuer Schlüssel mit einem neuen
-Passwort-Code erzeugt wird !!
+Passwort-Code erzeugt wird.
 
 Um die Übertragung auszuhandeln, baut Wormhole eine Verbindung zum
 Server "relay.magic-wormhole.io" und zu "transit.magic-wormhole.io"
@@ -115,7 +115,7 @@ und die zwei darauf eingehenden Verbindungen miteinander zu verknüpfen.
 Den Inhalt der Übertragung kann die Vermittlungsstelle nicht einsehen,
 da dieser durch die starke Verschlüsselung mittels "SPAKE2"
 verschlüsselt ist. Ist die verschlüsselte Verbindung aufgebaut,
-tauschen die Wormhole-Clienten ihre verfügbaren IP-Adressen und
+tauschen die Wormhole-Klienten ihre verfügbaren IP-Adressen und
 ausgewählten Ports (Kanäle) aus und versuchen sich über diese
 gegenseitig zu erreichen. Klappt dies, werden die Daten verschlüsselt
 "peer-to-peer" direkt zwischen den beiden Computern (Teilnehmern)
@@ -150,8 +150,8 @@ Anwendungen zu integrieren (wie dies bei "Wormhole-GUI" der Fall ist).
 
 "Magic Wormhole", der "Magic Wormhole"-Mailbox Server sowie der
 "Magic Wormhole"-Transit-Relay Server sind in der Programmiersprache
-"Python" geschrieben und laufen unter den Betriebsystemen "Windows",
-"macOS" und "Linux"; die Client-Software in der "Go"-Version auch auf
+"Python" geschrieben und laufen unter den Betriebssystemen "Windows",
+"MacOS" und "Linux"; die Client-Software in der "Go"-Version auch auf
 "Android"-Smartphones ("Wormhole-William Mobile"). Die Programm-
 Varianten können alle untereinander kommunizieren. 
 
@@ -159,7 +159,7 @@ Obwohl im Original "Magic Wormhole" ein Kommandozeilen-Programm ist,
 zeigt es, dass sich Sicherheit und Komfort miteinander vereinbaren
 lassen.
 
-Der Entwickler "Brian Warner" verfügt über sehr detailierte Kenntnisse
+Der Entwickler "Brian Warner" verfügt über sehr detaillierte Kenntnisse
 der Umsetzung von "quanten-resistenten" Verschlüsselungsverfahren.
 Er selbst ist leitender Programmierer in dem Projekt "Tahoe-LAFS",
 einem verteilten, verschlüsselten Dateisystem. 
@@ -168,8 +168,29 @@ einem verteilten, verschlüsselten Dateisystem.
 Engineer bei "Slack Technologies, Inc.". "Jacob Alzen"
 ("Wormhole-GUI") ist Mitentwickler im Projekt "Fyne.io".
 
+NGI-Trust: https://www.ngi.eu/ngi-projects/ngi-trust/
+
+Im Jahr 2020 erhielt das Unternehmen "Least Authority TFA GmbH" aus
+Berlin Fördermittel aus dem NGI Trust-Programm, um kommerzielle
+Möglichkeiten für Magic Wormhole zu erkunden. "Least Authority" hat
+dieses Projekt "MW4ALL" – "Magic Wormhole for All" genannt:
+
+https://leastauthority.com/blog/mw4all-2-0-exploring-the-product-potential-of-secure-file-transfer/
+
+"Least Authority" untersucht, wie ein nachhaltiges Produkt auf Basis
+von Magic Wormhole entwickelt und wie es technisch skaliert werden
+kann, ohne seine Sicherheit zu gefährden. Mit anderen Worten,
+Magic Wormhole den Massen zugänglich zu machen, damit jeder die
+sichere und einfache Dateifreigabe genießen kann.
+
+Aufgrund der Fokusierung auf den Anwendungsfall der Web-zu-Web-
+Übertragung hat die "Least Authority TFA GmbH" entschieden, dass die
+o. g. Go-Implementierung "Wormhole-William" von dem Autor
+"Peter Sanford" (psanford) am besten zur Unterstützung der
+Ziel-Architektur "Web-Assembly" geeignet ist.
+
 Die Programmiersprache "Go" gilt als eine "sichere" Sprache; beide
-Projekte: "Wormhole-GUI" und "Wormhole-William" vewenden ein
+Projekte: "Wormhole-GUI" und "Wormhole-William" verwenden ein
 Test-Framework zur statischen Programmcode-Analyse, um Schwachstellen
 im Quellcode zu erkennen.
 
@@ -181,14 +202,17 @@ Webseiten und Quellen:
 Magic-Wormhole:    https://github.com/magic-wormhole/magic-wormhole
 Dokumentation:     https://magic-wormhole.readthedocs.io/en/latest/
 Wormhole-William:  https://github.com/psanford/wormhole-william
+(deutsche Version) https://github.com/vitusb/wormhole-william
 Mobile (Android):  https://github.com/psanford/wormhole-william-mobile
 Wormhole-GUI:      https://github.com/Jacalz/wormhole-gui
+(deutsche Version) https://github.com/vitusb/wormhole-gui
 Fyne:              https://apps.fyne.io/apps/wormhole-gui.html
                    https://fyne.io/
 SPAKE2 (in "Go"):  https://salsa.debian.org/vasudev/gospake2
 Krypto Links       https://github.com/sobolevn/awesome-cryptography
 Erklärung zu ECC   https://security.stackexchange.com/questions/50878/ecdsa-vs-ecdh-vs-ed25519-vs-curve25519#211484
 DRAFT SPAKE2       https://tools.ietf.org/id/draft-irtf-cfrg-spake2-10.html
+                   https://datatracker.ietf.org/doc/draft-irtf-cfrg-spake2/
 PAKE               https://en.wikipedia.org/wiki/Password-authenticated_key_agreement
 CodeQL             https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
 
@@ -209,6 +233,7 @@ Filippo Valsorda ("FiloSottile") ist Kryptologe und
 Sicherheits-Koordinator bei "Google" und führender Entwickler im
 Kernteam der Programmiersprache "Go". Er is verantwortlich für den
 Verschlüsselungs-Code in "Go" ... für die Paketzweige:
+
 - crypto/... und 
 - golang.org/x/crypto.
 
@@ -231,5 +256,5 @@ https://blog.cryptographyengineering.com/2018/10/19/lets-talk-about-pake/
 Artikel von "Matthew Green" Kryptologe und Professor an der
 Johns Hopkins Universität zu PGP/GNUPG:
 
-What's the matter with PGP:
+What's the matter with PGP ?:
 https://blog.cryptographyengineering.com/2014/08/13/whats-matter-with-pgp/
